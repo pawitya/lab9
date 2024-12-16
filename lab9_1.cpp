@@ -1,33 +1,45 @@
-#include<iostream>
-#include<iomanip> //For using setw(), setprecision(), ...
+#include <iostream>
+#include <iomanip> // For output formatting
 using namespace std;
 
-int main(){	
-	cout << "Enter initial loan: ";
-	cout << "Enter interest rate per year (%): ";
-	cout << "Enter amount you can pay per year: ";
+int main() {
 
-	//use 'setw' to set width of table and 'left' to set left-alignment
-	//you can change input argument of 'setw()' to see the effect
-	//Try to change from 'left' to 'right' and see the effect
-	cout << setw(13) << left << "EndOfYear#"; 
+    double l, D, P, interest, total, prevBalance;
+    int year = 1;
+
+    cout << "Enter initial loan: ";
+    cin >> l;
+
+    cout << "Enter interest rate per year (%): ";
+    cin >> D;
+
+    cout << "Enter amount you can pay per year: ";
+    cin >> P;
+
+    cout << setw(13) << left << "EndOfYear#"; 
 	cout << setw(13) << left << "PrevBalance"; 
 	cout << setw(13) << left << "Interest"; 
 	cout << setw(13) << left << "Total";
 	cout << setw(13) << left << "Payment";
 	cout << setw(13) << left << "NewBalance";
 	cout << "\n";
-	
-	//use 'fixed' and 'setprecision' to fix the number of decimal digits for displaying
-	//you can change input argument of 'setprecision()' to see the effect
-	cout << fixed << setprecision(2); 
-	cout << setw(13) << left << 1; 
-	cout << setw(13) << left << 1000.0;
-	cout << setw(13) << left << 50.0;
-	cout << setw(13) << left << 1050.0;
-	cout << setw(13) << left << 100.0;
-	cout << setw(13) << left << 950.0;
-	cout << "\n";	
-	
-	return 0;
+
+    prevBalance = l;
+
+    while (prevBalance > 0) {
+        interest = (prevBalance * D) / 100;
+        total = prevBalance + interest;
+        double payment = (total < P) ? total : P;
+        double newBalance = total - payment;
+        cout << setw(13) << year
+             << setw(13) << fixed << setprecision(2) << prevBalance
+             << setw(13) << interest
+             << setw(13) << total
+             << setw(13) << payment
+             << setw(13) << newBalance << endl;
+        prevBalance = newBalance;
+        year++;
+    }
+
+    return 0;
 }
